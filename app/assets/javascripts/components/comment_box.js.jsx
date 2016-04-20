@@ -18,7 +18,7 @@ export default class CommentBox extends React.Component {
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState(data);
+        this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -29,7 +29,7 @@ export default class CommentBox extends React.Component {
   handleCommentSubmit(comment) {
     const oldComments = this.state.data;
     comment.id = Date.now();
-    const newComments = comments.concat([comment]);
+    const newComments = oldComments.concat([comment]);
     this.setState({data: newComments});
     
     $.ajax({
