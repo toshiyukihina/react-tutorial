@@ -57,6 +57,11 @@ export default class CommentBox extends React.Component {
 
 }
 
+CommentBox.propTypes = {
+  url: React.PropTypes.string.isRequired,
+  pollInterval: React.PropTypes.number
+};
+
 CommentBox.defaultProps = {
   defaultPollInterval: 1000
 };

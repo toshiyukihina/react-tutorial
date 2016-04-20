@@ -22,3 +22,7 @@ export default class Comment extends React.Component {
   }
   
 }
+
+Comment.propTypes = {
+  author: React.PropTypes.string.isRequired
+};

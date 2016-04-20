@@ -41,3 +41,7 @@ export default class CommentForm extends React.Component {
   }
 
 }
+
+CommentForm.propTypes = {
+  onCommentSubmit: React.PropTypes.func.isRequired
+};
