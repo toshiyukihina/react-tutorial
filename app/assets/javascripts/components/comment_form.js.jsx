@@ -9,6 +9,9 @@ export default class CommentForm extends React.Component {
       author: '',
       text: ''
     };
+
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   handleAuthorChange(e) {
@@ -33,8 +36,8 @@ export default class CommentForm extends React.Component {
   render() {
     return (
       <form className="commentForm" onSubmit={this.handleSubmit.bind(this)}>
-        <input type="text" placeholder="Your name" value={this.state.author} onChange={this.handleAuthorChange.bind(this)} />
-        <input type="text" placeholder="Say something..." value={this.state.text} onChange={this.handleTextChange.bind(this)} />
+        <input type="text" placeholder="Your name" value={this.state.author} onChange={this.handleAuthorChange} />
+        <input type="text" placeholder="Say something..." value={this.state.text} onChange={this.handleTextChange} />
         <input type="submit" value="Post" />
       </form>
     );
