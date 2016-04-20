@@ -1,4 +1,5 @@
 import React from 'react';
+import request from 'superagent';
 import CommentList from './comment_list';
 import CommentForm from './comment_form';
 
@@ -13,17 +14,13 @@ export default class CommentBox extends React.Component {
   }
 
   loadCommentsFromServer() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    request.get(this.props.url)
+           .end((err, res) => {
+             if (err) {
+               throw err;
+             }
+             this.setState({data: res.body});
+           });
   }
 
   handleCommentSubmit(comment) {
@@ -32,20 +29,15 @@ export default class CommentBox extends React.Component {
     const newComments = oldComments.concat([comment]);
     this.setState({data: newComments});
     
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        this.setState({data: oldComments});
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    request.post(this.props.url)
+           .send(comment)
+           .end((err, res) => {
+             if (err) {
+               this.setState({data: oldComments});               
+               throw err
+             }
+             this.setState({data: res.body});
+           });
   }
 
   componentDidMount() {
